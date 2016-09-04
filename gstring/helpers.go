@@ -12,5 +12,5 @@ func SetIfExists(dst *string, src string) {
 // MatchingProblem returns a formatted string which explains
 // that the two elements s1 and s2 of type obj don't match
 func MatchingProblem(obj, i1, i2 interface{}) string {
-	return fmt.Sprintf("%s %s an %s do not match", obj, i1, i2)
+	return fmt.Sprintf("%s %s and %s do not match", obj, i1, i2)
 }
