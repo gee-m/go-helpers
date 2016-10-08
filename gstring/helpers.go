@@ -18,9 +18,9 @@ func MatchingProblem(obj, i1, i2 interface{}) string {
 	return fmt.Sprintf("%s %s and %s do not match", obj, i1, i2)
 }
 
-// CamelToSnakeCase formats string s into snake case from camel case
+// CamelToSnake formats string s into snake case from camel case
 // e.g. hi_im_camel -> hiImCamel
-func CamelToSnakeCase(s string, capitalize bool) string {
+func CamelToSnake(s string, capitalize bool) string {
 	cpy := s
 	found := 0
 	for i, v := range cpy {

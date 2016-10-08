@@ -17,19 +17,19 @@ func TestSetIfExists(t *testing.T) {
 	}
 }
 
-func TestCamelToSnakeCase(t *testing.T) {
+func TestCamelToSnake(t *testing.T) {
 	camel := "camel_baby"
-	snake := CamelToSnakeCase(camel, false)
+	snake := CamelToSnake(camel, false)
 	if snake != "camelBaby" {
 		t.Error("Wrong answer: " + snake)
 	}
 
-	snake = CamelToSnakeCase(camel, true)
+	snake = CamelToSnake(camel, true)
 	if snake != "CamelBaby" {
 		t.Error("Wrong answer: " + snake)
 	}
 
-	snake = CamelToSnakeCase("___what_is__GOING_on_", false)
+	snake = CamelToSnake("___what_is__GOING_on_", false)
 	if snake != "___whatIs__GOINGOn_" {
 		t.Error("Wrong answer: " + snake)
 	}
