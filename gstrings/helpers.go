@@ -1,4 +1,4 @@
-package gstring
+package gstrings
 
 import (
 	"fmt"
@@ -43,4 +43,18 @@ func CamelToSnake(s string, capitalize bool) string {
 		}
 	}
 	return s
+}
+
+// StringBetween returns a string enclosed by start and end (exluded both)
+func StringBetween(s, start, end string) string {
+	i1 := strings.Index(s, start)
+	if i1 == -1 {
+		return ""
+	}
+	s2 := s[i1+len(start):]
+	i2 := strings.Index(s2, end)
+	if i2 == -1 {
+		return ""
+	}
+	return s2[:i2]
 }
