@@ -51,6 +51,8 @@ func CamelToSnake(s string, capitalize bool) string {
 func SnakeToCamel(s string) string {
 	cpy := s
 	found := 0
+	lastTwoCapitalized := false
+
 	for i, v := range cpy {
 		first := i == 0
 
@@ -62,13 +64,15 @@ func SnakeToCamel(s string) string {
 		currCapitalized := unicode.IsUpper(v)
 
 		if lastCapitalized && currCapitalized {
+			lastTwoCapitalized = true
 			continue
 		}
-		if !lastCapitalized && currCapitalized {
+		if (!lastCapitalized && currCapitalized) || (lastTwoCapitalized && !currCapitalized) {
 			// We want to separate with underscore
 			s = s[:i+found] + "_" + s[i+found:]
 			found++ // shift the index of the string s
 		}
+		lastTwoCapitalized = false
 	}
 	return strings.ToLower(s)
 }

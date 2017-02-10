@@ -34,3 +34,22 @@ func TestCamelToSnake(t *testing.T) {
 		t.Error("Wrong answer: " + snake)
 	}
 }
+
+func TestSnakeToCamel(t *testing.T) {
+	snake := "snakeBaby"
+	camel := SnakeToCamel(snake)
+	if camel != "snake_baby" {
+		t.Error("Wrong answer: " + camel)
+	}
+
+	snake = "SnakeBabyyy"
+	camel = SnakeToCamel(snake)
+	if camel != "snake_babyyy" {
+		t.Error("Wrong answer: " + camel)
+	}
+
+	camel = SnakeToCamel("WhATisGOiNGoN")
+	if camel != "wh_at_is_go_i_ng_o_n" {
+		t.Error("Wrong answer: " + camel)
+	}
+}
