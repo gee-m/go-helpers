@@ -3,6 +3,7 @@ package gstrings
 import (
 	"fmt"
 	"strings"
+	"unicode"
 )
 
 // SetIfExists does dst = src (only if src is not empty)
@@ -43,6 +44,33 @@ func CamelToSnake(s string, capitalize bool) string {
 		}
 	}
 	return s
+}
+
+// SnakeToCamel formats string s into camel case from snake case
+// e.g. HiImSnake -> hi_im_snake
+func SnakeToCamel(s string) string {
+	cpy := s
+	found := 0
+	for i, v := range cpy {
+		first := i == 0
+
+		if first { // skip if first letter
+			continue
+		}
+
+		lastCapitalized := unicode.IsUpper(rune(cpy[i-1]))
+		currCapitalized := unicode.IsUpper(v)
+
+		if lastCapitalized && currCapitalized {
+			continue
+		}
+		if !lastCapitalized && currCapitalized {
+			// We want to separate with underscore
+			s = s[:i+found] + "_" + s[i+found:]
+			found++ // shift the index of the string s
+		}
+	}
+	return strings.ToLower(s)
 }
 
 // StringBetween returns a string enclosed by start and end (exluded both)
