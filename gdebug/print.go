@@ -16,6 +16,14 @@ func Debugf(f string, vals ...interface{}) {
 	fmt.Printf(fmt.Sprintf("%s: ", line)+f, vals...)
 }
 
+// Errorf creates the error, but prepends the filename:line_nb of the creation
+func Errorf(f string, vals ...interface{}) error {
+	stack := strings.Split(string(debug.Stack()), "\n")
+	line := stack[6]
+	line = line[strings.LastIndex(line, "/")+1:]
+	return fmt.Errorf(fmt.Sprintf("%s: ", line)+f, vals...)
+}
+
 // CountPrintf prints the debug message along with a prefix number to identify it
 func CountPrintf(f string, vals ...interface{}) {
 	count++
