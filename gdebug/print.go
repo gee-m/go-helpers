@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"runtime/debug"
 	"strings"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 var count = 0
@@ -14,6 +16,12 @@ func Debugf(f string, vals ...interface{}) {
 	line := stack[6]
 	line = line[strings.LastIndex(line, "/")+1:]
 	fmt.Printf(fmt.Sprintf("%s: ", line)+f, vals...)
+}
+
+// Dump prints a spew.Dump with filename:line_nb before
+func Dump(a ...interface{}) {
+	Debugf(" ")
+	spew.Dump(a...)
 }
 
 // Errorf creates the error, but prepends the filename:line_nb of the creation
