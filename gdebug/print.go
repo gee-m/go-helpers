@@ -20,7 +20,10 @@ func Debugf(f string, vals ...interface{}) {
 
 // Dump prints a spew.Dump with filename:line_nb before
 func Dump(a ...interface{}) {
-	Debugf(" ")
+	stack := strings.Split(string(debug.Stack()), "\n")
+	line := stack[6]
+	line = line[strings.LastIndex(line, "/")+1:]
+	fmt.Printf("%s: ", line)
 	spew.Dump(a...)
 }
 
