@@ -83,7 +83,15 @@ func StringBetween(s, start, end string) (found bool, str string) {
 	if i1 == -1 {
 		return false, ""
 	}
-	s2 := s[i1+len(start):]
+	s2 := s
+
+	if start != "" {
+		s2 = s[i1+len(start):]
+		if end == "" {
+			return true, s2
+		}
+	}
+
 	i2 := strings.Index(s2, end)
 	if i2 == -1 {
 		return false, ""
