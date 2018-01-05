@@ -19,9 +19,12 @@ func MatchingProblem(obj, i1, i2 interface{}) string {
 	return fmt.Sprintf("%s %s and %s do not match", obj, i1, i2)
 }
 
-// CamelToSnake formats string s into snake case from camel case
+// ToCamel formats string s into camel case from snake case
+// with specified rune
 // e.g. hi_im_camel -> hiImCamel
-func CamelToSnake(s string, capitalize bool) string {
+func ToCamel(s string, sep rune, capitalize bool) string {
+	s = strings.ToLower(s)
+
 	cpy := s
 	found := 0
 	for i, v := range cpy {
@@ -30,15 +33,15 @@ func CamelToSnake(s string, capitalize bool) string {
 		if first && capitalize {
 			s = strings.ToUpper(s[:1]) + s[1:]
 		}
-		if first && v == '_' {
+		if first && v == sep {
 			continue
-		} else if !first && cpy[i-1] == '_' && v == '_' {
+		} else if !first && cpy[i-1] == byte(sep) && v == sep {
 			continue
-		} else if !last && v == '_' && cpy[i+1] == '_' {
+		} else if !last && v == sep && cpy[i+1] == byte(sep) {
 			continue
 		}
 
-		if v == '_' && !last {
+		if v == sep && !last {
 			s = s[:i-found] + strings.ToUpper(cpy[i+1:i+2]) + cpy[i+2:]
 			found++
 		}
@@ -46,9 +49,8 @@ func CamelToSnake(s string, capitalize bool) string {
 	return s
 }
 
-// SnakeToCamel formats string s into camel case from snake case
-// e.g. HiImSnake -> hi_im_snake
-func SnakeToCamel(s string) string {
+// ToSnake formats string s into snake_case from CamelCase
+func ToSnake(s string) string {
 	cpy := s
 	found := 0
 	lastTwoCapitalized := false
