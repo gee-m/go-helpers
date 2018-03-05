@@ -10,28 +10,36 @@ import (
 
 var count = 0
 
+// LineInfo returns "{nameoffile}.go:{linenumber}" of the caller
+func LineInfo() string {
+	return lineInfo(8)
+}
+
+// lineInfo returns "{nameoffile}.go:{linenumber}" of the caller, offsetted by n
+func lineInfo(n int) string {
+	stack := strings.Split(string(debug.Stack()), "\n")
+	line := stack[n]
+	line = line[strings.LastIndex(line, "/")+1:]
+	line = strings.Split(line, " ")[0]
+	return line
+}
+
 // Debugf prints the filename:line_nb of the Debugf call
 func Debugf(f string, vals ...interface{}) {
-	stack := strings.Split(string(debug.Stack()), "\n")
-	line := stack[6]
-	line = line[strings.LastIndex(line, "/")+1:]
+	line := lineInfo(8)
 	fmt.Printf(fmt.Sprintf("%s: ", line)+f, vals...)
 }
 
 // Dump prints a spew.Dump with filename:line_nb before
 func Dump(a ...interface{}) {
-	stack := strings.Split(string(debug.Stack()), "\n")
-	line := stack[6]
-	line = line[strings.LastIndex(line, "/")+1:]
+	line := lineInfo(8)
 	fmt.Printf("%s: ", line)
 	spew.Dump(a...)
 }
 
 // Errorf creates the error, but prepends the filename:line_nb of the creation
 func Errorf(f string, vals ...interface{}) error {
-	stack := strings.Split(string(debug.Stack()), "\n")
-	line := stack[6]
-	line = line[strings.LastIndex(line, "/")+1:]
+	line := lineInfo(8)
 	return fmt.Errorf(fmt.Sprintf("%s: ", line)+f, vals...)
 }
 
