@@ -1,6 +1,7 @@
 package gdebug
 
 import (
+	"encoding/json"
 	"fmt"
 	"runtime/debug"
 	"strings"
@@ -9,6 +10,14 @@ import (
 )
 
 var count = 0
+
+func DumpJSON(itf interface{}) {
+	b, err := json.Marshal(itf)
+	if err != nil {
+		fmt.Println("Could not dumpjson:", err)
+	}
+	fmt.Println(string(b))
+}
 
 // LineInfo returns "{nameoffile}.go:{linenumber}" of the caller
 func LineInfo() string {
